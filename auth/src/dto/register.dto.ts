@@ -19,7 +19,7 @@ export class RegisterDto {
   firstName: string;
 
   @ApiProperty()
-    @IsString()
-    @IsNotEmpty()
-    lastName: string;
+  @IsString()
+  @IsNotEmpty()
+  lastName: string;
 }

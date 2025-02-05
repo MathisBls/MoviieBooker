@@ -4,6 +4,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { AuthModule } from './module/auth-module.module';
 
 async function bootstrap() {
+  console.log('✅ NestJS démarre bien...');
+
   const app = await NestFactory.create(AuthModule);
 
   app.useGlobalPipes(new ValidationPipe());
