@@ -1,12 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
-import { AuthModule } from './module/auth-module.module';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
-  console.log('✅ NestJS démarre bien...');
-
-  const app = await NestFactory.create(AuthModule);
+  const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(new ValidationPipe());
 
@@ -14,6 +12,7 @@ async function bootstrap() {
     .setTitle('Auth API')
     .setDescription('API Authentication')
     .setVersion('1.0')
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' })
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
