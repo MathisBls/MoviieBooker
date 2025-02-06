@@ -1,18 +1,18 @@
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.enableCors(); // Permettre les requêtes CORS
 
+  // Configuration Swagger
   const config = new DocumentBuilder()
-    .setTitle('Auth API')
-    .setDescription('API Authentication')
+    .setTitle('API Authentification')
+    .setDescription('API pour gérer l’authentification des utilisateurs')
     .setVersion('1.0')
-    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' })
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
