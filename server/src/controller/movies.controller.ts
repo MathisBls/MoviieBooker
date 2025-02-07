@@ -8,22 +8,22 @@ export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
 
   @ApiOperation({
-    summary: 'Récupérer les films (avec recherche, pagination et tri)',
+    summary: 'Récupérer des films avec recherche, pagination et tri',
   })
   @ApiQuery({
     name: 'search',
     required: false,
-    description: 'Titre à rechercher',
+    description: 'Titre du film à rechercher',
   })
   @ApiQuery({
     name: 'page',
     required: false,
-    description: 'Page de pagination (par défaut : 1)',
+    description: 'Numéro de la page (pagination)',
   })
   @ApiQuery({
     name: 'sort',
     required: false,
-    description: 'Critère de tri (par défaut : popularity.desc)',
+    description: 'Critère de tri (ex. : popularity.desc)',
   })
   @Get()
   async getMovies(
@@ -46,11 +46,6 @@ export class MoviesController {
   }
 
   @ApiOperation({ summary: 'Obtenir les détails d’un film spécifique' })
-  @ApiQuery({
-    name: 'id',
-    required: true,
-    description: 'Identifiant unique du film',
-  })
   @Get(':id')
   async getMovieDetails(@Param('id') movieId: number) {
     return this.moviesService.getMovieDetails(movieId);

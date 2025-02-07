@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './module/user.module';
 import { MoviesModule } from './module/movies.module';
+import { ReservationModule } from './module/reservation.module';
 import { DataSource } from 'typeorm';
 
 @Module({
@@ -22,9 +23,9 @@ import { DataSource } from 'typeorm';
     }),
     UserModule,
     MoviesModule,
+    ReservationModule,
   ],
 })
 export class AppModule {
-  constructor(private dataSource: DataSource) {
-  }
+  constructor(private dataSource: DataSource) {}
 }
