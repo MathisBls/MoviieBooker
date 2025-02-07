@@ -8,6 +8,7 @@ const Home = () => {
     const [movies, setMovies] = useState([]);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
+    const [reservedMovies, setReservedMovies] = useState([]);
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -21,7 +22,23 @@ const Home = () => {
             }
         };
 
+        const fetchReservedMovies = async () => {
+            if (isAuthenticated()) {
+                try {
+                    const token = localStorage.getItem('token');
+                    const response = await api.get('/reservations', {
+                        headers: { Authorization: `Bearer ${token}` },
+                    });
+                    const reservedIds = response.data.map((res) => res.movie_id);
+                    setReservedMovies(reservedIds);
+                } catch (error) {
+                    console.error("Erreur lors de la récupération des réservations", error);
+                }
+            }
+        };
+
         fetchMovies();
+        fetchReservedMovies();
     }, [page, search]);
 
     const handleReserve = async (movieId, movieTitle) => {
@@ -31,7 +48,7 @@ const Home = () => {
         }
 
         const token = localStorage.getItem('token');
-        const startTime = new Date().toISOString(); // Date actuelle en ISO
+        const startTime = new Date().toISOString();
 
         try {
             const response = await api.post(
@@ -41,6 +58,7 @@ const Home = () => {
             );
 
             alert(response.data.message);
+            setReservedMovies([...reservedMovies, movieId]);
         } catch (error) {
             console.error("Erreur lors de la réservation", error);
             alert("Impossible de réserver ce film.");
@@ -49,12 +67,12 @@ const Home = () => {
 
     return (
         <div>
-            <h1>Liste des Films</h1>
+            <h1 style={{ textAlign: 'center' }}>Liste des Films</h1>
             <MoviesSearchPagination
                 onSearch={setSearch}
                 onPageChange={(value) => setPage(parseInt(value))}
             />
-            <MoviesList movies={movies} onReserve={handleReserve} />
+            <MoviesList movies={movies} reservedMovies={reservedMovies} onReserve={handleReserve} />
         </div>
     );
 };

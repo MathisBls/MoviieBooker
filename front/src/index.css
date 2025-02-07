@@ -5,9 +5,85 @@ body {
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 400px;
+  padding: 25px;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 12px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+h1, h2 {
+  text-align: center;
+  margin: 20px 0;
+  letter-spacing: 1px;
+  color: #ff416c;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.search-container input {
+  padding: 12px;
+  width: 300px;
+  border: none;
+  border-radius: 25px;
+  background-color: #333;
+  color: white;
+  outline: none;
+  font-size: 16px;
+  transition: transform 0.3s, box-shadow 0.3s ease-in-out;
+}
+
+.search-container input:focus {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 15px rgba(255, 65, 108, 0.5);
+}
+
+.search-container button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.search-container button:hover {
+  background: linear-gradient(135deg, #ff4b2b, #ff416c);
+  transform: scale(1.1);
+}
+
+.search-container select {
+  padding: 12px;
+  border-radius: 25px;
+  border: none;
+  background-color: #444;
+  color: white;
+  font-size: 16px;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s ease-in-out;
+}
+
+.search-container select:hover {
+  background-color: #555;
+  transform: scale(1.05);
 }
 
 .movies-container {
@@ -21,39 +97,66 @@ body {
 .movie-card {
   width: 220px;
   background: #222;
-  border-radius: 12px;
+  border-radius: 15px;
   overflow: hidden;
   text-align: center;
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
+  animation: slideUp 0.5s ease forwards;
+  opacity: 0;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .movie-card img {
   width: 100%;
-  border-bottom: 2px solid #007bff;
-  border-radius: 12px 12px 0 0;
+  border-bottom: 3px solid #ff416c;
+  border-radius: 15px 15px 0 0;
 }
 
 .movie-card h3 {
   font-size: 16px;
   margin: 10px 0;
-  color: #fff;
+  color: white;
 }
 
 .movie-card p {
   font-size: 14px;
   color: #ccc;
+  margin-bottom: 10px;
 }
 
-.movie-card:hover {
+.movie-card button {
+  padding: 10px;
+  width: 90%;
+  border: none;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s ease-in-out;
+  margin-bottom: 10px;
+}
+
+.movie-card button:hover {
+  background: linear-gradient(135deg, #ff4b2b, #ff416c);
   transform: scale(1.05);
-  box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.5);
 }
 
-.movie-card {
-  opacity: 0;
-  animation: fadeIn 0.5s ease-in forwards;
+.movie-card button.disabled {
+  background: #555;
+  color: #aaa;
+  cursor: not-allowed;
 }
 
 @keyframes fadeIn {
@@ -67,78 +170,21 @@ body {
   }
 }
 
-button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 5px;
-  background: linear-gradient(135deg, #ff416c, #ff4b2b);
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.2s ease-in-out;
-}
-
-button:hover {
-  background: linear-gradient(135deg, #ff4b2b, #ff416c);
-  transform: scale(1.05);
-}
-
-.search-container {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
-}
-
-.search-container input {
-  padding: 10px;
-  width: 250px;
-  border: none;
-  border-radius: 20px;
-  outline: none;
-  font-size: 14px;
-  transition: box-shadow 0.3s ease;
-}
-
-.search-container input:focus {
-  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
-}
-
-.container {
-  width: 100%;
-  max-width: 400px;
-  padding: 25px;
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 12px;
-  box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.1);
-  text-align: center;
-  animation: slideIn 0.5s ease-in-out forwards;
-  transform: translateY(-10px);
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
+@media (max-width: 768px) {
+  .search-container {
+    flex-direction: column;
+    gap: 15px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .search-container input {
+    width: 90%;
   }
-}
 
-input {
-  width: 90%;
-  padding: 12px;
-  margin: 10px 0;
-  border: none;
-  border-radius: 5px;
-  display: block;
-  outline: none;
-  font-size: 14px;
-}
+  .movies-container {
+    gap: 15px;
+  }
 
-input:focus {
-  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
+  .movie-card {
+    width: 180px;
+  }
 }
