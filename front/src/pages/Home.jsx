@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { isAuthenticated } from '../services/auth';
 import MoviesList from '../components/MoviesList';
@@ -9,6 +10,8 @@ const Home = () => {
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
     const [reservedMovies, setReservedMovies] = useState([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -44,6 +47,7 @@ const Home = () => {
     const handleReserve = async (movieId, movieTitle) => {
         if (!isAuthenticated()) {
             alert("Vous devez être connecté pour réserver !");
+            navigate('/login');
             return;
         }
 
@@ -61,7 +65,7 @@ const Home = () => {
             setReservedMovies([...reservedMovies, movieId]);
         } catch (error) {
             console.error("Erreur lors de la réservation", error);
-            alert("Impossible de réserver ce film.");
+            alert("Impossible de réserver ce film. (2 heures d'intervalles minimum)");
         }
     };
 
